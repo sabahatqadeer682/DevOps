@@ -21,7 +21,7 @@ Food Fusion
 
   **Nimra Gul** 
   -cloned and updated app.js 
-  -changed hellow world to hello world Nimra 
+  -changed hellow world to hello world Nimra Gul
    
 
  
