@@ -18,6 +18,10 @@ Food Fusion
 - **Sabahat Qadeer**  
   - Repository creation & setup  
   - Upload initial project code  
+
+  **Nimra Gul** 
+  -cloned and updated app.js 
+  -changed hellow world to hello world Nimra 
    
 
  
