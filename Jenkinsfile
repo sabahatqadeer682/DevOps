@@ -9,24 +9,24 @@ pipeline {
     stages {
         stage('Pull Code from GitHub') {
             steps {
-                echo '📥 Pulling source code from GitHub...'
+                echo 'Pulling source code from GitHub...'
                 git branch: 'main', url: 'https://github.com/sabahatqadeer682/DevOps.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                echo '🐳 Building Docker image...'
+                echo 'Building Docker image...'
                 script {
                     sh 'docker build -t ${IMAGE_NAME}:latest .'
                 }
             }
         }
 
-        // 🧪 New Stage: Run Tests
+        // New Stage: Run Tests
         stage('Run Tests') {
             steps {
-                echo '🧪 Running dummy tests...'
+                echo 'Running dummy tests...'
                 // Creating a simple fake test result file (works even if you don’t have real tests)
                 sh '''
                     echo "<testsuite name='SampleSuite'>
@@ -37,10 +37,10 @@ pipeline {
             }
         }
 
-        // 🧾 New Stage: Publish Test Results
+        // New Stage: Publish Test Results
         stage('Publish Test Results') {
             steps {
-                echo '📊 Publishing test results...'
+                echo 'Publishing test results...'
                 junit 'results.xml'  // Jenkins will read and visualize this
             }
         }
@@ -60,10 +60,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ Pipeline executed successfully — image pushed to Docker Hub!'
+            echo 'Pipeline executed successfully — image pushed to Docker Hub!'
         }
         failure {
-            echo '❌ Pipeline failed — check build logs.'
+            echo 'Pipeline failed — check build logs.'
         }
     }
 }
