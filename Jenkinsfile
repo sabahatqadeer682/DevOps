@@ -1,41 +1,47 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+        IMAGE_NAME = "amna989/DevOps" 
+    }
+
     stages {
-        stage('Checkout') {
+        stage('Pull Code from GitHub') {
             steps {
+                echo 'Pulling source code from GitHub...'
                 git branch: 'main', url: 'https://github.com/sabahatqadeer682/DevOps.git'
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Building the application...'
-                bat 'echo Simulating build process'
+                echo 'Building Docker image...'
+                script {
+                    sh 'docker build -t ${IMAGE_NAME}:latest .'
+                }
             }
         }
 
-        stage('Test') {
+        stage('Push Image to Docker Hub') {
             steps {
-                echo 'Running tests...'
-                bat 'echo All tests passed successfully!'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying the app...'
-                bat 'echo Deployment complete!'
+                echo 'Pushing Docker image to Docker Hub...'
+                script {
+                    sh '''
+                        echo "$DOCKERHUB_CREDENTIALS_PSW" | docker login -u "$DOCKERHUB_CREDENTIALS_USR" --password-stdin
+                        docker push ${IMAGE_NAME}:latest
+                    '''
+                }
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline executed successfully!'
+            echo '✅ Pipeline executed successfully — image pushed to Docker Hub!'
         }
         failure {
-            echo 'Pipeline failed!'
+            echo '❌ Pipeline failed — check build logs.'
         }
     }
 }
