@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  selector:
+    app: myapp
+  type: NodePort # ya: LoadBalancer (minikube mein NodePort ya ClusterIP + minikube service use hota)
+  ports:
+    - protocol: TCP
+      port: 80 # service port
+      targetPort: 80 # container port
+      nodePort: 30080 # optional: explicit node port (30000-32767)
